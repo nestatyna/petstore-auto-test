@@ -1,6 +1,6 @@
 package tests.pet;
 
-import base.PetController;
+import base.controllers.PetController;
 import base.TestBase;
 import dto.ErrorResponse;
 import dto.Pet;
@@ -8,10 +8,12 @@ import io.restassured.response.Response;
 import jdk.jfr.Description;
 import org.testng.annotations.Test;
 
-import static base.AbstractController.isSuccess;
+import static base.Helpers.createNewPet;
+import static base.controllers.AbstractController.isSuccess;
 import static base.CustomLogger.step;
-import static base.PetController.createPet;
-import static base.PetController.gePetRequest;
+import static base.controllers.PetController.createPet;
+import static base.controllers.PetController.gePetRequest;
+import static java.lang.Thread.sleep;
 import static org.testng.Assert.assertEquals;
 
 public class GetPetTests extends TestBase {
@@ -20,19 +22,14 @@ public class GetPetTests extends TestBase {
     @Description("Запрос данных питомца по Id")
     public void testGetPetById() {
         step("Создаём питомца");
-        Pet petBody = Pet.builder()
-                .id(PET_ID)
-                .name("Fluffy")
-                .status("available")
-                .build();
-        Pet createdPet = createPet(petBody);
+        Pet createdPet = createNewPet();
 
         step("Запрашиваем данные питомца по id");
         Pet response = PetController.getPet(createdPet.getId());
 
         assertEquals(response.getId(), PET_ID);
-        assertEquals(response.getName(), petBody.getName());
-        assertEquals(response.getStatus(), petBody.getStatus());
+        assertEquals(response.getName(), createdPet.getName());
+        assertEquals(response.getStatus(), createdPet.getStatus());
     }
 
     @Test

@@ -1,6 +1,6 @@
 package tests.pet;
 
-import base.PetController;
+import base.controllers.PetController;
 import base.TestBase;
 import dto.Category;
 import dto.Pet;
@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 
 import static base.CustomLogger.step;
-import static base.PetController.createPet;
+import static base.controllers.PetController.createPet;
 import static org.testng.Assert.assertEquals;
 
 public class CreatePetTests extends TestBase {

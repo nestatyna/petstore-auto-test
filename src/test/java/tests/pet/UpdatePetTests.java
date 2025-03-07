@@ -1,14 +1,14 @@
 package tests.pet;
 
-import base.PetController;
+import base.controllers.PetController;
 import base.TestBase;
 import dto.Pet;
 import jdk.jfr.Description;
 import org.testng.annotations.Test;
 
 import static base.CustomLogger.step;
-import static base.PetController.createPet;
-import static base.PetController.updatePet;
+import static base.controllers.PetController.createPet;
+import static base.controllers.PetController.updatePet;
 import static org.testng.Assert.assertEquals;
 
 public class UpdatePetTests extends TestBase {

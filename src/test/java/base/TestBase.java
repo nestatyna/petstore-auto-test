@@ -6,7 +6,7 @@ import org.testng.annotations.AfterTest;
 import java.util.Random;
 
 import static base.CustomLogger.log;
-import static base.PetController.deletePetRequest;
+import static base.controllers.PetController.deletePetRequest;
 
 public class TestBase {
 

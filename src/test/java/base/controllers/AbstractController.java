@@ -1,4 +1,4 @@
-package base;
+package base.controllers;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;

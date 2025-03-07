@@ -1,24 +1,33 @@
 package tests.pet;
 
+import base.Helpers;
 import base.TestBase;
-import io.restassured.response.Response;
+import dto.Pet;
 import jdk.jfr.Description;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 
-import static base.AbstractController.isSuccess;
 import static base.CustomLogger.step;
-import static base.PetController.deletePet;
-import static base.PetController.deletePetRequest;
-import static org.testng.Assert.assertEquals;
+import static base.controllers.AbstractController.isSuccess;
+import static base.controllers.PetController.*;
 
 public class DeletePetTests extends TestBase {
+
+    @Override
+    @AfterTest
+    public void cleanup() {}
 
     @Test
     @Description("Удаление питомца")
     public void checkDeletePetTest() {
-        Response response = deletePet(PET_ID);
+        step("Создаём питомцв");
+        Pet pet = Helpers.createNewPet();
 
-        assertEquals(response.getStatusCode(), 200);
+        step("Удаялем созданного питомца");
+        deletePet(pet.getId());
+
+        step("Проверяем, что питомец удалён");
+        isSuccess(gePetRequest(getRandomId()), 404);
     }
 
     @Test

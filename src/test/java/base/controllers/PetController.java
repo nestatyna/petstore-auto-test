@@ -1,4 +1,4 @@
-package base;
+package base.controllers;
 
 import dto.Pet;
 import io.restassured.RestAssured;
