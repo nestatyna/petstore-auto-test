@@ -9,6 +9,7 @@
 - Java 17
 - Gradle
 - Lombok
+- RestAssured
 - Docker
 
 ## Установка
