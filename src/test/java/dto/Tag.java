@@ -1,8 +1,12 @@
 package dto;
 
-import lombok.Getter;
+import lombok.*;
 
 @Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Tag {
 
     private Integer id;
