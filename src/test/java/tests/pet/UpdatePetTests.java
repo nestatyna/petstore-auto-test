@@ -1,12 +1,13 @@
 package tests.pet;
 
-import base.controllers.PetController;
 import base.TestBase;
 import dto.Pet;
 import jdk.jfr.Description;
 import org.testng.annotations.Test;
 
+import static base.BodyHelper.getPetBody;
 import static base.CustomLogger.step;
+import static base.Helpers.getRandomId;
 import static base.controllers.PetController.*;
 import static org.testng.Assert.assertEquals;
 
@@ -16,20 +17,11 @@ public class UpdatePetTests extends TestBase {
     @Description("Изменение питомца")
     public void checkUpdatePetTest() {
         step("Создаём питомца");
-        Pet petBody = Pet.builder()
-                .id(PET_ID)
-                .name("Fluffy")
-                .status("available")
-                .build();
+        Pet petBody = getPetBody();
         Pet createdPet = createPet(petBody);
 
         step("Изменяем данные питомца");
-        Pet updatePetBody = Pet.builder()
-                .id(petBody.getId())
-                .name("FluffyUpdated")
-                .status("sold")
-                .build();
-
+        Pet updatePetBody = getPetBody("FluffyUpdated", "sold");
         Pet updatedPet = updatePet(updatePetBody);
 
         assertEquals(updatedPet.getName(), updatePetBody.getName());
@@ -41,25 +33,23 @@ public class UpdatePetTests extends TestBase {
         assertEquals(pet.getId(), updatedPet.getId());
         assertEquals(pet.getName(), updatedPet.getName());
         assertEquals(pet.getStatus(), updatedPet.getStatus());
+        assertEquals(pet.getCategory().getId(), updatedPet.getCategory().getId());
+        assertEquals(pet.getCategory().getName(), updatedPet.getCategory().getName());
+        assertEquals(pet.getTags().get(0).getId(), updatedPet.getTags().get(0).getId());
+        assertEquals(pet.getTags().get(0).getName(), updatedPet.getTags().get(0).getName());
+        assertEquals(pet.getPhotoUrls().get(0), updatedPet.getPhotoUrls().get(0));
     }
 
     @Test
-    @Description("Изменение питомца")
+    @Description("Изменение питомца с несуществующим id")
     public void checkUpdatePetWithNotExistIdTest() {
         step("Создаём питомца");
-        Pet petBody = Pet.builder()
-                .id(PET_ID)
-                .name("Fluffy")
-                .status("available")
-                .build();
+        Pet petBody = getPetBody();
         Pet createdPet = createPet(petBody);
 
         step("Изменяем данные питомца");
-        Pet updatePetBody = Pet.builder()
-                .id(getRandomId())
-                .name("FluffyUpdated")
-                .status("sold")
-                .build();
+        Pet updatePetBody =  getPetBody("FluffyUpdated", "sold");
+        updatePetBody.setId(getRandomId());
 
         Pet updatedPet = updatePet(updatePetBody);
 

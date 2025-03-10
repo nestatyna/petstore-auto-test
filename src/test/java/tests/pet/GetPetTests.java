@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 
 import static base.CustomLogger.step;
 import static base.Helpers.createNewPet;
+import static base.Helpers.getRandomId;
 import static base.controllers.AbstractController.isSuccess;
 import static base.controllers.PetController.gePetRequest;
 import static org.testng.Assert.assertEquals;

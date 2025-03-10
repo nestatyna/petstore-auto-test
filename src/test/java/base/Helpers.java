@@ -1,38 +1,19 @@
 package base;
 
-import base.controllers.PetController;
-import dto.Category;
 import dto.Pet;
-import dto.Tag;
 
-import java.util.ArrayList;
+import java.util.Random;
 
-import static base.TestBase.PET_ID;
+import static base.BodyHelper.getPetBody;
+import static base.controllers.PetController.createPet;
 
 public class Helpers {
 
     public static Pet createNewPet() {
-        ArrayList<Tag> tagsList = new ArrayList<>();
-        tagsList.add(Tag.builder()
-                .id(0)
-                .name("autotest")
-                .build());
+        return createPet(getPetBody());
+    }
 
-        ArrayList<String> photoUrls = new ArrayList<>();
-        photoUrls.add("photoUrls for Fluffy");
-
-        Pet petBody = Pet.builder()
-                .id(PET_ID)
-                .name("Fluffy")
-                .status("available")
-                .category(Category.builder()
-                        .id(0)
-                        .name("autotest")
-                        .build())
-                .tags(tagsList)
-                .photoUrls(photoUrls)
-                .build();
-
-        return PetController.createPet(petBody);
+    public static Integer getRandomId() {
+        return new Random().nextInt(100000);
     }
 }

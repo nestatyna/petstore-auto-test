@@ -14,7 +14,7 @@ public class StoreTests extends TestBase {
     @Test
     @Description("Запрос инвентаризации по статусам")
     public void checkGetPetByIdTest() {
-        step("Запрашиваем инвентаризацию");
+        step("Запрашиваем инвентаризацию по статусам");
         StoreInventory response = getStoreInventory();
 
         //Т.к. у нас нет возможности узнать точное колличество животных по статусам, проверяем что они не null.

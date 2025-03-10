@@ -1,6 +1,5 @@
 package tests.pet;
 
-import base.Helpers;
 import base.TestBase;
 import dto.Pet;
 import jdk.jfr.Description;
@@ -8,6 +7,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 
 import static base.CustomLogger.step;
+import static base.Helpers.createNewPet;
+import static base.Helpers.getRandomId;
 import static base.controllers.AbstractController.isSuccess;
 import static base.controllers.PetController.*;
 
@@ -20,10 +21,10 @@ public class DeletePetTests extends TestBase {
     @Test
     @Description("Удаление питомца")
     public void checkDeletePetTest() {
-        step("Создаём питомцв");
-        Pet pet = Helpers.createNewPet();
+        step("Создаём питомца");
+        Pet pet = createNewPet();
 
-        step("Удаялем созданного питомца");
+        step("Удаляем созданного питомца");
         deletePet(pet.getId());
 
         step("Проверяем, что питомец удалён");

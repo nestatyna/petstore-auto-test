@@ -1,17 +1,14 @@
 package tests.pet;
 
-import base.controllers.PetController;
 import base.TestBase;
-import dto.Category;
 import dto.Pet;
-import dto.Tag;
 import jdk.jfr.Description;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-
+import static base.BodyHelper.getPetBody;
 import static base.CustomLogger.step;
 import static base.controllers.PetController.createPet;
+import static base.controllers.PetController.getPet;
 import static org.testng.Assert.assertEquals;
 
 public class CreatePetTests extends TestBase {
@@ -20,27 +17,7 @@ public class CreatePetTests extends TestBase {
     @Description("Создание питомца")
     public void checkCreatePetTest() {
         step("Создаём питомца");
-        ArrayList<Tag> tagsList = new ArrayList<>();
-        tagsList.add(Tag.builder()
-                .id(0)
-                .name("autotest")
-                .build());
-
-        ArrayList<String> photoUrls = new ArrayList<>();
-        photoUrls.add("photoUrls for Fluffy");
-
-        Pet petBody = Pet.builder()
-                .id(PET_ID)
-                .name("Fluffy")
-                .status("available")
-                .category(Category.builder()
-                        .id(0)
-                        .name("autotest")
-                        .build())
-                .tags(tagsList)
-                .photoUrls(photoUrls)
-                .build();
-
+        Pet petBody = getPetBody();
         Pet createdPet = createPet(petBody);
 
         assertEquals(createdPet.getId(), petBody.getId());
@@ -53,7 +30,7 @@ public class CreatePetTests extends TestBase {
         assertEquals(createdPet.getPhotoUrls().get(0), petBody.getPhotoUrls().get(0));
 
         step("Проверяем, что питомец создан корректно");
-        Pet pet = PetController.getPet(createdPet.getId());
+        Pet pet = getPet(createdPet.getId());
 
         assertEquals(pet.getId(), createdPet.getId());
         assertEquals(pet.getName(), createdPet.getName());
