@@ -18,7 +18,7 @@ public class CreatePetTests extends TestBase {
 
     @Test
     @Description("Создание питомца")
-    public void testCreatePet() {
+    public void checkCreatePetTest() {
         step("Создаём питомца");
         ArrayList<Tag> tagsList = new ArrayList<>();
         tagsList.add(Tag.builder()
