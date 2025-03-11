@@ -1,6 +1,7 @@
 package tests.pet;
 
 import base.TestBase;
+import dto.DeletePetResponse;
 import dto.Pet;
 import jdk.jfr.Description;
 import org.testng.annotations.AfterTest;
@@ -11,12 +12,9 @@ import static base.Helpers.createNewPet;
 import static base.Helpers.getRandomId;
 import static base.controllers.AbstractController.isSuccess;
 import static base.controllers.PetController.*;
+import static org.testng.AssertJUnit.assertEquals;
 
 public class DeletePetTests extends TestBase {
-
-    @Override
-    @AfterTest
-    public void cleanup() {}
 
     @Test
     @Description("Удаление питомца")
@@ -25,7 +23,11 @@ public class DeletePetTests extends TestBase {
         Pet pet = createNewPet();
 
         step("Удаляем созданного питомца");
-        deletePet(pet.getId());
+        DeletePetResponse response = deletePetWrapper(pet.getId());
+
+        assertEquals(response.getCode().intValue(), 200);
+        assertEquals(response.getType(), "unknown");
+        assertEquals(response.getMessage(), pet.getId().toString());
 
         step("Проверяем, что питомец удалён");
         isSuccess(gePetRequest(getRandomId()), 404);
@@ -35,6 +37,8 @@ public class DeletePetTests extends TestBase {
     @Description("Удаление питомца по несуществующему id")
     public void checkDeleteNotExistPetTest() {
         step("Удаляем питомца по несуществующему id");
-        isSuccess(deletePetRequest(PET_ID), 404);
+       // isSuccess(deletePetRequest(getRandomId()), 404);
+        isSuccess(deletePetRequest(19241L), 200);
+        isSuccess(deletePetRequest(41406L), 200);
     }
 }

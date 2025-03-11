@@ -13,7 +13,15 @@ public class Helpers {
         return createPet(getPetBody());
     }
 
-    public static Integer getRandomId() {
-        return new Random().nextInt(100000);
+    public static Long getRandomId() {
+        return new Random().nextLong(100000);
+    }
+
+    public static void sleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

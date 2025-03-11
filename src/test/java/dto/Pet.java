@@ -12,7 +12,7 @@ import java.util.ArrayList;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Pet {
-    private Integer id;
+    private Long id;
     private Category category;
     private String name;
     private ArrayList<String> photoUrls;

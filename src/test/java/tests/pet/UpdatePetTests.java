@@ -22,13 +22,14 @@ public class UpdatePetTests extends TestBase {
 
         step("Изменяем данные питомца");
         Pet updatePetBody = getPetBody("FluffyUpdated", "sold");
+        updatePetBody.setId(createdPet.getId());
         Pet updatedPet = updatePet(updatePetBody);
 
         assertEquals(updatedPet.getName(), updatePetBody.getName());
         assertEquals(updatedPet.getStatus(), updatePetBody.getStatus());
 
         step("Проверяем, что данные изменились");
-        Pet pet = getPet(createdPet.getId());
+        Pet pet = getPetWrapper(createdPet.getId());
 
         assertEquals(pet.getId(), updatedPet.getId());
         assertEquals(pet.getName(), updatedPet.getName());

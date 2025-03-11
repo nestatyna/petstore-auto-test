@@ -1,21 +1,34 @@
 package base;
 
-import io.restassured.response.Response;
-import org.testng.annotations.AfterTest;
+import org.testng.annotations.AfterSuite;
 
-import java.util.Random;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import static base.CustomLogger.log;
-import static base.controllers.PetController.deletePetRequest;
+import static base.controllers.PetController.deletePetWrapper;
+import static base.controllers.PetController.deletePetWrapperWithoutRemove;
 
 public class TestBase {
 
-    protected static final Integer PET_ID = 78819;
+    public static final Set<Long> PET_IDS = new HashSet<>();
 
-    @AfterTest
+    @AfterSuite
     public void cleanup() {
-        log("\nAFTER TEST: Удаляем созданного питомца, id = " + PET_ID);
-        Response response = deletePetRequest(PET_ID);
-        log("RESPONSE STATUS: " + response.getStatusCode());
+        log("\nAFTER SUITE: Удаляем созданных питомцев, id = " + PET_IDS);
+
+        Iterator<Long> iterator = PET_IDS.iterator();
+        while (iterator.hasNext()) {
+            Long petId = iterator.next();
+            log("Удаляем питомца id = " + petId);
+            deletePetWrapper(petId, false);
+            iterator.remove(); // Теперь удаление выполняется ТОЛЬКО здесь
+        }
+
+       /* PET_IDS.forEach(petId -> {
+            log("Удаляем питомца id = " + petId);
+            deletePetWrapper(petId);
+        });*/
     }
 }

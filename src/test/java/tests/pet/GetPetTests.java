@@ -1,7 +1,6 @@
 package tests.pet;
 
 import base.TestBase;
-import base.controllers.PetController;
 import dto.ErrorResponse;
 import dto.Pet;
 import io.restassured.response.Response;
@@ -13,6 +12,7 @@ import static base.Helpers.createNewPet;
 import static base.Helpers.getRandomId;
 import static base.controllers.AbstractController.isSuccess;
 import static base.controllers.PetController.gePetRequest;
+import static base.controllers.PetController.getPetWrapper;
 import static org.testng.Assert.assertEquals;
 
 public class GetPetTests extends TestBase {
@@ -24,11 +24,16 @@ public class GetPetTests extends TestBase {
         Pet createdPet = createNewPet();
 
         step("Запрашиваем данные питомца по id");
-        Pet response = PetController.getPet(createdPet.getId());
+        Pet response = getPetWrapper(createdPet.getId());
 
-        assertEquals(response.getId(), PET_ID);
+        assertEquals(response.getId(), createdPet.getId());
         assertEquals(response.getName(), createdPet.getName());
         assertEquals(response.getStatus(), createdPet.getStatus());
+        assertEquals(response.getCategory().getId(), createdPet.getCategory().getId());
+        assertEquals(response.getCategory().getName(), createdPet.getCategory().getName());
+        assertEquals(response.getTags().get(0).getId(), createdPet.getTags().get(0).getId());
+        assertEquals(response.getTags().get(0).getName(), createdPet.getTags().get(0).getName());
+        assertEquals(response.getPhotoUrls().get(0), createdPet.getPhotoUrls().get(0));
     }
 
     @Test

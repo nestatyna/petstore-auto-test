@@ -6,7 +6,7 @@ import dto.Tag;
 
 import java.util.ArrayList;
 
-import static base.TestBase.PET_ID;
+import static base.Helpers.getRandomId;
 
 public class BodyHelper {
 
@@ -26,7 +26,7 @@ public class BodyHelper {
         photoUrls.add("photoUrls for Fluffy");
 
         return Pet.builder()
-                .id(PET_ID)
+                .id(getRandomId())
                 .name(name)
                 .status(status)
                 .category(Category.builder()
