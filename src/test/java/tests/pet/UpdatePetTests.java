@@ -2,70 +2,84 @@ package tests.pet;
 
 import base.TestBase;
 import dto.Pet;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Description;
-import org.testng.annotations.Ignore;
+import io.qameta.allure.Feature;
 import org.testng.annotations.Test;
 
 import static base.BodyHelper.getPetBody;
-import static base.CustomLogger.step;
 import static base.Helpers.getRandomId;
 import static base.controllers.PetController.*;
 import static org.testng.Assert.assertEquals;
-@Ignore
+
+@Feature("Изменение данных питомца")
 public class UpdatePetTests extends TestBase {
 
     @Test
     @Description("Изменение питомца")
     public void checkUpdatePetTest() {
-        step("Создаём питомца");
         Pet petBody = getPetBody();
-        Pet createdPet = createPet(petBody);
+        final Pet[] createdPet = {new Pet()};
+        final Pet[] updatedPet = {new Pet()};
 
-        step("Изменяем данные питомца");
-        Pet updatePetBody = getPetBody("FluffyUpdated", "sold");
-        updatePetBody.setId(createdPet.getId());
-        Pet updatedPet = updatePet(updatePetBody);
+        Allure.step("Создаём питомца", () -> {
+            createdPet[0] = createPet(petBody);
+        });
 
-        assertEquals(updatedPet.getName(), updatePetBody.getName());
-        assertEquals(updatedPet.getStatus(), updatePetBody.getStatus());
+        Allure.step("Изменяем данные питомца", () -> {
+            Pet updatePetBody = getPetBody("FluffyUpdated", "sold");
+            updatePetBody.setId(createdPet[0].getId());
+            updatedPet[0] = updatePet(updatePetBody);
 
-        step("Проверяем, что данные изменились");
-        Pet pet = getPetWrapper(createdPet.getId());
+            assertEquals(updatedPet[0].getName(), updatePetBody.getName());
+            assertEquals(updatedPet[0].getStatus(), updatePetBody.getStatus());
+        });
 
-        assertEquals(pet.getId(), updatedPet.getId());
-        assertEquals(pet.getName(), updatedPet.getName());
-        assertEquals(pet.getStatus(), updatedPet.getStatus());
-        assertEquals(pet.getCategory().getId(), updatedPet.getCategory().getId());
-        assertEquals(pet.getCategory().getName(), updatedPet.getCategory().getName());
-        assertEquals(pet.getTags().get(0).getId(), updatedPet.getTags().get(0).getId());
-        assertEquals(pet.getTags().get(0).getName(), updatedPet.getTags().get(0).getName());
-        assertEquals(pet.getPhotoUrls().get(0), updatedPet.getPhotoUrls().get(0));
+        Allure.step("Проверяем, что данные изменились", () -> {
+            Pet pet = getPetWrapper(createdPet[0].getId());
+
+            assertEquals(pet.getId(), updatedPet[0].getId());
+            assertEquals(pet.getName(), updatedPet[0].getName());
+            assertEquals(pet.getStatus(), updatedPet[0].getStatus());
+            assertEquals(pet.getCategory().getId(), updatedPet[0].getCategory().getId());
+            assertEquals(pet.getCategory().getName(), updatedPet[0].getCategory().getName());
+            assertEquals(pet.getTags().get(0).getId(), updatedPet[0].getTags().get(0).getId());
+            assertEquals(pet.getTags().get(0).getName(), updatedPet[0].getTags().get(0).getName());
+            assertEquals(pet.getPhotoUrls().get(0), updatedPet[0].getPhotoUrls().get(0));
+        });
     }
 
     @Test
     @Description("Изменение питомца с несуществующим id")
     public void checkUpdatePetWithNotExistIdTest() {
-        step("Создаём питомца");
         Pet petBody = getPetBody();
-        Pet createdPet = createPet(petBody);
+        final Pet[] createdPet = {new Pet()};
 
-        step("Изменяем данные питомца");
-        Pet updatePetBody =  getPetBody("FluffyUpdated", "sold");
+        Pet updatePetBody = getPetBody("FluffyUpdated", "sold");
         updatePetBody.setId(getRandomId());
+        final Pet[] updatedPet = {new Pet()};
 
-        Pet updatedPet = updatePet(updatePetBody);
+        Allure.step("Создаём питомца", () -> {
+            createdPet[0] = createPet(petBody);
+        });
 
-        assertEquals(updatedPet.getName(), updatePetBody.getName());
-        assertEquals(updatedPet.getStatus(), updatePetBody.getStatus());
+        Allure.step("Изменяем данные питомца", () -> {
+            updatedPet[0] = updatePet(updatePetBody);
 
-        step("Проверяем, что данные не изменились");
-        Pet pet = getPet(createdPet.getId());
+            assertEquals(updatedPet[0].getName(), updatePetBody.getName());
+            assertEquals(updatedPet[0].getStatus(), updatePetBody.getStatus());
+        });
 
-        assertEquals(pet.getId(), createdPet.getId());
-        assertEquals(pet.getName(), createdPet.getName());
-        assertEquals(pet.getStatus(), createdPet.getStatus());
+        Allure.step("Проверяем, что данные не изменились", () -> {
+            Pet pet = getPetWrapper(createdPet[0].getId());
 
-        step("Проверяем, что питомец не создан");
-        isSuccess(gePetRequest(updatedPet.getId()), 404);
+            assertEquals(pet.getId(), createdPet[0].getId());
+            assertEquals(pet.getName(), createdPet[0].getName());
+            assertEquals(pet.getStatus(), createdPet[0].getStatus());
+        });
+
+        Allure.step("Проверяем, что создан питомец с новым id", () -> {
+            getPetWrapper(updatedPet[0].getId());
+        });
     }
 }

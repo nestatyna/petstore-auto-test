@@ -31,7 +31,7 @@ public class PetController extends AbstractController {
             }
             log("ERROR: " + response.getStatusCode() + " OK");
             log("body: \n" + (response.asString().isEmpty() ? "empty" : response.asString()) + "\n");
-            sleep(2000);
+            sleep(3000);
         }
         throw new RuntimeException("Ошибка получения данных о питомце id = " + id);
     }
@@ -104,7 +104,7 @@ public class PetController extends AbstractController {
             }
             log("ERROR: " + response.getStatusCode() + " OK");
             log("body: \n" + (response.asString().isEmpty() ? "empty" : response.asString()) + "\n");
-            sleep(2000);
+            sleep(3000);
         }
         log("ERROR: Не удалось удалить питомца ID = " + id + " после 3 попыток.");
         return null;
@@ -125,7 +125,7 @@ public class PetController extends AbstractController {
             }
             log("ERROR: " + response.getStatusCode() + " OK");
             log("body: \n" + (response.asString().isEmpty() ? "empty" : response.asString()) + "\n");
-            sleep(1000);
+            sleep(3000);
         }
         log("ERROR: Не удалось удалить питомца ID = " + id + " после 3 попыток.");
         return null;
