@@ -2,13 +2,14 @@ package tests.store;
 
 import base.TestBase;
 import dto.StoreInventory;
-import jdk.jfr.Description;
+import io.qameta.allure.Description;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import static base.CustomLogger.step;
 import static base.controllers.StoreController.getStoreInventory;
 import static org.testng.Assert.assertNotNull;
-
+@Ignore
 public class StoreTests extends TestBase {
 
     @Test

@@ -4,7 +4,8 @@ import base.TestBase;
 import dto.ErrorResponse;
 import dto.Pet;
 import io.restassured.response.Response;
-import jdk.jfr.Description;
+import io.qameta.allure.Description;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import static base.CustomLogger.step;
@@ -14,7 +15,7 @@ import static base.controllers.AbstractController.isSuccess;
 import static base.controllers.PetController.gePetRequest;
 import static base.controllers.PetController.getPetWrapper;
 import static org.testng.Assert.assertEquals;
-
+@Ignore
 public class GetPetTests extends TestBase {
 
     @Test

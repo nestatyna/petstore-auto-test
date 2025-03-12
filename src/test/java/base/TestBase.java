@@ -1,6 +1,9 @@
 package base;
 
+import io.qameta.allure.restassured.AllureRestAssured;
+import io.restassured.RestAssured;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeClass;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -14,6 +17,11 @@ public class TestBase {
 
     public static final Set<Long> PET_IDS = new HashSet<>();
 
+    @BeforeClass
+    public void setup() {
+        RestAssured.filters(new AllureRestAssured());
+    }
+
     @AfterSuite
     public void cleanup() {
         log("\nAFTER SUITE: Удаляем созданных питомцев, id = " + PET_IDS);
@@ -25,10 +33,5 @@ public class TestBase {
             deletePetWrapper(petId, false);
             iterator.remove(); // Теперь удаление выполняется ТОЛЬКО здесь
         }
-
-       /* PET_IDS.forEach(petId -> {
-            log("Удаляем питомца id = " + petId);
-            deletePetWrapper(petId);
-        });*/
     }
 }

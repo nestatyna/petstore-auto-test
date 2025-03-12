@@ -31,7 +31,7 @@ public class PetController extends AbstractController {
             }
             log("ERROR: " + response.getStatusCode() + " OK");
             log("body: \n" + (response.asString().isEmpty() ? "empty" : response.asString()) + "\n");
-            sleep(1000);
+            sleep(2000);
         }
         throw new RuntimeException("Ошибка получения данных о питомце id = " + id);
     }

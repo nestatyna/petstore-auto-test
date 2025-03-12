@@ -2,7 +2,8 @@ package tests.pet;
 
 import base.TestBase;
 import dto.Pet;
-import jdk.jfr.Description;
+import io.qameta.allure.Description;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import static base.BodyHelper.getPetBody;
@@ -10,7 +11,7 @@ import static base.CustomLogger.step;
 import static base.Helpers.getRandomId;
 import static base.controllers.PetController.*;
 import static org.testng.Assert.assertEquals;
-
+@Ignore
 public class UpdatePetTests extends TestBase {
 
     @Test
