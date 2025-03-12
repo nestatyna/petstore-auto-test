@@ -17,7 +17,6 @@ import static base.CustomLogger.step;
 import static base.Helpers.getRandomId;
 import static base.controllers.PetController.*;
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNull;
 
 public class CreatePetTests extends TestBase {
 
